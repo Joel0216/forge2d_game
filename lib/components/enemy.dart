@@ -12,26 +12,21 @@ import 'body_component_with_user_data.dart';
 
 const enemySize = 5.0;
 
-enum EnemyColor {
-  pink(color: 'pink', boss: false),
-  blue(color: 'blue', boss: false),
-  green(color: 'green', boss: false),
-  yellow(color: 'yellow', boss: false),
-  pinkBoss(color: 'pink', boss: true),
-  blueBoss(color: 'blue', boss: true),
-  greenBoss(color: 'green', boss: true),
-  yellowBoss(color: 'yellow', boss: true);
+enum PigType {
+  pig,
+  kingpig;
 
-  final bool boss;
-  final String color;
+  static PigType get random =>
+      PigType.values[Random().nextInt(PigType.values.length)];
 
-  const EnemyColor({required this.color, required this.boss});
-
-  static EnemyColor get randomColor =>
-      EnemyColor.values[Random().nextInt(EnemyColor.values.length)];
-
-  String get fileName =>
-      'alien${color.capitalize}_${boss ? 'suit' : 'square'}.png';
+  String get fileName {
+    switch (this) {
+      case PigType.pig:
+        return 'pig-Pig.png';
+      case PigType.kingpig:
+        return 'Kingpig-Pig.png';
+    }
+  }
 }
 
 class Enemy extends BodyComponentWithUserData with ContactCallbacks {

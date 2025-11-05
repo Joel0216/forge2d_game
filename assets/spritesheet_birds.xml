@@ -1,0 +1,7 @@
+<TextureAtlas imagePath="birds_placeholder.png">
+  <SubTexture name="Red-Bird.png" x="0" y="0" width="70" height="70" />
+  <SubTexture name="Blue-Bird.png" x="0" y="0" width="70" height="70" />
+  <SubTexture name="Chuck-Bird.png" x="0" y="0" width="70" height="70" />
+  <SubTexture name="Matilda-Bird.png" x="0" y="0" width="70" height="70" />
+  <SubTexture name="Boom-Bird.png" x="0" y="0" width="70" height="70" />
+</TextureAtlas>

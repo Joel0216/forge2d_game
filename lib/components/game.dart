@@ -23,7 +23,8 @@ class MyPhysicsGame extends Forge2DGame {
         camera: CameraComponent.withFixedResolution(width: 800, height: 600),
       );
 
-  late final XmlSpriteSheet aliens;
+  late final XmlSpriteSheet birds;
+  late final XmlSpriteSheet pigs;
   late final XmlSpriteSheet elements;
   late final XmlSpriteSheet tiles;
 
@@ -31,10 +32,8 @@ class MyPhysicsGame extends Forge2DGame {
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('colored_grass.png');
     final spriteSheets = await Future.wait([
-      XmlSpriteSheet.load(
-        imagePath: 'spritesheet_aliens.png',
-        xmlPath: 'spritesheet_aliens.xml',
-      ),
+      XmlSpriteSheet.load(imagePath: 'spritesheet_aliens.png', xmlPath: 'spritesheet_birds.xml'),
+      XmlSpriteSheet.load(imagePath: 'spritesheet_aliens.png', xmlPath: 'spritesheet_pigs.xml'),
       XmlSpriteSheet.load(
         imagePath: 'spritesheet_elements.png',
         xmlPath: 'spritesheet_elements.xml',
@@ -45,9 +44,10 @@ class MyPhysicsGame extends Forge2DGame {
       ),
     ]);
 
-    aliens = spriteSheets[0];
-    elements = spriteSheets[1];
-    tiles = spriteSheets[2];
+    birds = spriteSheets[0];
+    pigs = spriteSheets[1];
+    elements = spriteSheets[2];
+    tiles = spriteSheets[3];
 
     await world.add(Background(sprite: Sprite(backgroundImage)));
     await addGround();
@@ -100,7 +100,7 @@ class MyPhysicsGame extends Forge2DGame {
   Future<void> addPlayer() async => world.add(
     Player(
       Vector2(camera.visibleWorldRect.left * 2 / 3, 0),
-      aliens.getSprite(PlayerColor.randomColor.fileName),
+      birds.getSprite(BirdType.random.fileName),
     ),
   );
 
@@ -146,7 +146,7 @@ class MyPhysicsGame extends Forge2DGame {
                 (_random.nextDouble() * 7 - 3.5),
             (_random.nextDouble() * 3),
           ),
-          aliens.getSprite(EnemyColor.randomColor.fileName),
+          pigs.getSprite(PigType.random.fileName),
         ),
       );
       await Future<void>.delayed(const Duration(seconds: 1));

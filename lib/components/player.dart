@@ -14,17 +14,30 @@ import 'body_component_with_user_data.dart';
 
 const playerSize = 5.0;
 
-enum PlayerColor {
-  pink,
+enum BirdType {
+  red,
   blue,
-  green,
-  yellow;
+  chuck,
+  matilda,
+  boom;
 
-  static PlayerColor get randomColor =>
-      PlayerColor.values[Random().nextInt(PlayerColor.values.length)];
+  static BirdType get random =>
+      BirdType.values[Random().nextInt(BirdType.values.length)];
 
-  String get fileName =>
-      'alien${toString().split('.').last.capitalize}_round.png';
+  String get fileName {
+    switch (this) {
+      case BirdType.red:
+        return 'Red-Bird.png';
+      case BirdType.blue:
+        return 'Blue-Bird.png';
+      case BirdType.chuck:
+        return 'Chuck-Bird.png';
+      case BirdType.matilda:
+        return 'Matilda-Bird.png';
+      case BirdType.boom:
+        return 'Boom-Bird.png';
+    }
+  }
 }
 
 class Player extends BodyComponentWithUserData with DragCallbacks {
