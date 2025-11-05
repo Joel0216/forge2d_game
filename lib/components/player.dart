@@ -41,27 +41,29 @@ enum BirdType {
 }
 
 class Player extends BodyComponentWithUserData with DragCallbacks {
-  Player(Vector2 position, Sprite sprite)
-    : _sprite = sprite,
-      super(
-        renderBody: false,
-        bodyDef: BodyDef()
-          ..position = position
-          ..type = BodyType.static
-          ..angularDamping = 0.1
-          ..linearDamping = 0.1,
-        fixtureDefs: [
-          FixtureDef(CircleShape()..radius = playerSize / 2)
-            ..restitution = 0.4
-            ..density = 0.75
-            ..friction = 0.5,
-        ],
-      );
+  Player(Vector2 position, this.birdType)
+      : super(
+          renderBody: false,
+          bodyDef: BodyDef()
+            ..position = position
+            ..type = BodyType.static
+            ..angularDamping = 0.1
+            ..linearDamping = 0.1,
+          fixtureDefs: [
+            FixtureDef(CircleShape()..radius = playerSize / 2)
+              ..restitution = 0.4
+              ..density = 0.75
+              ..friction = 0.5,
+          ],
+        );
 
-  final Sprite _sprite;
+  final BirdType birdType;
 
   @override
-  Future<void> onLoad() {
+  Future<void> onLoad() async {
+    await super.onLoad();
+    final sprite = await game.loadSprite(birdType.fileName);
+    final shape = CircleShape()..radius = playerSize / 2;
     addAll([
       CustomPainterComponent(
         painter: _DragPainter(this),
@@ -71,12 +73,11 @@ class Player extends BodyComponentWithUserData with DragCallbacks {
       ),
       SpriteComponent(
         anchor: Anchor.center,
-        sprite: _sprite,
+        sprite: sprite,
         size: Vector2(playerSize, playerSize),
         position: Vector2(0, 0),
       ),
     ]);
-    return super.onLoad();
   }
 
   @override

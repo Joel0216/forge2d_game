@@ -23,8 +23,6 @@ class MyPhysicsGame extends Forge2DGame {
         camera: CameraComponent.withFixedResolution(width: 800, height: 600),
       );
 
-  late final XmlSpriteSheet birds;
-  late final XmlSpriteSheet pigs;
   late final XmlSpriteSheet elements;
   late final XmlSpriteSheet tiles;
 
@@ -32,8 +30,6 @@ class MyPhysicsGame extends Forge2DGame {
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('colored_grass.png');
     final spriteSheets = await Future.wait([
-      XmlSpriteSheet.load(imagePath: 'spritesheet_aliens.png', xmlPath: 'spritesheet_birds.xml'),
-      XmlSpriteSheet.load(imagePath: 'spritesheet_aliens.png', xmlPath: 'spritesheet_pigs.xml'),
       XmlSpriteSheet.load(
         imagePath: 'spritesheet_elements.png',
         xmlPath: 'spritesheet_elements.xml',
@@ -44,10 +40,8 @@ class MyPhysicsGame extends Forge2DGame {
       ),
     ]);
 
-    birds = spriteSheets[0];
-    pigs = spriteSheets[1];
-    elements = spriteSheets[2];
-    tiles = spriteSheets[3];
+    elements = spriteSheets[0];
+    tiles = spriteSheets[1];
 
     await world.add(Background(sprite: Sprite(backgroundImage)));
     await addGround();
@@ -98,11 +92,11 @@ class MyPhysicsGame extends Forge2DGame {
   }
 
   Future<void> addPlayer() async => world.add(
-    Player(
-      Vector2(camera.visibleWorldRect.left * 2 / 3, 0),
-      birds.getSprite(BirdType.random.fileName),
-    ),
-  );
+        Player(
+          Vector2(camera.visibleWorldRect.left * 2 / 3, 0),
+          BirdType.random,
+        ),
+      );
 
   @override
   void update(double dt) {
@@ -146,7 +140,7 @@ class MyPhysicsGame extends Forge2DGame {
                 (_random.nextDouble() * 7 - 3.5),
             (_random.nextDouble() * 3),
           ),
-          pigs.getSprite(PigType.random.fileName),
+          PigType.random,
         ),
       );
       await Future<void>.delayed(const Duration(seconds: 1));
