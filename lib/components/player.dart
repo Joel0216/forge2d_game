@@ -24,7 +24,7 @@ enum BirdType {
   static BirdType get random =>
       BirdType.values[Random().nextInt(BirdType.values.length)];
 
-  String get fileName {
+  String get asset {
     switch (this) {
       case BirdType.red:
         return 'Red-Bird.png';
@@ -62,8 +62,8 @@ class Player extends BodyComponentWithUserData with DragCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    final sprite = await game.loadSprite(birdType.fileName);
-    final shape = CircleShape()..radius = playerSize / 2;
+    final sprite = await game.loadSprite(birdType.asset);
+
     addAll([
       CustomPainterComponent(
         painter: _DragPainter(this),
@@ -128,10 +128,6 @@ class Player extends BodyComponentWithUserData with DragCallbacks {
   }
 }
 
-extension on String {
-  String get capitalize =>
-      characters.first.toUpperCase() + characters.skip(1).toLowerCase().join();
-}
 
 class _DragPainter extends CustomPainter {
   _DragPainter(this.player);

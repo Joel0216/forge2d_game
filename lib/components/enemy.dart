@@ -6,7 +6,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/material.dart';
+
 
 import 'body_component_with_user_data.dart';
 
@@ -50,7 +50,7 @@ class Enemy extends BodyComponentWithUserData with ContactCallbacks {
   Future<void> onLoad() async {
     await super.onLoad();
     final sprite = await game.loadSprite(pigType.fileName);
-    final shape = PolygonShape()..setAsBoxXY(enemySize / 2, enemySize / 2);
+
 
     add(SpriteComponent(
       anchor: Anchor.center,
@@ -83,7 +83,3 @@ class Enemy extends BodyComponentWithUserData with ContactCallbacks {
   }
 }
 
-extension on String {
-  String get capitalize =>
-      characters.first.toUpperCase() + characters.skip(1).toLowerCase().join();
-}
